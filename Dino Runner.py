@@ -10,7 +10,7 @@ white = (255,255,255)
 
 #load images
 running = [pygame.image.load("DinoRun1.png"),pygame.image.load("DinoRun2.png")]
-jumping = [pygame.image.load("DinoJump.png")]
+jumping = pygame.image.load("DinoJump.png")
 ducking = [pygame.image.load("DinoDuck1.png"),pygame.image.load("DinoDuck2.png")]
 small_cactus = [pygame.image.load("SmallCactus1.png"),pygame.image.load("SmallCactus2.png"),pygame.image.load("SmallCactus3.png")]
 large_cactus = [pygame.image.load("LargeCactus1.png"),pygame.image.load("LargeCactus2.png"),pygame.image.load("LargeCactus3.png")]
@@ -23,6 +23,7 @@ class Dinosaur():
     x_pos = 80 
     y_pos = 310
     y_pos_duck = 340
+    JUMP_VEL = 8.5
 
     def __init__(self):
         self.duck_img = ducking
@@ -34,6 +35,7 @@ class Dinosaur():
         self.dino_jump = False
 
         self.step_index = 0
+        self.jump_vel = self.JUMP_VEL
         self.image = self.run_img[0]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.x_pos
@@ -66,9 +68,6 @@ class Dinosaur():
             self.dino_duck = False
             self.dino_jump = False
             
-    def draw(self,screen):
-        screen.blit(self.image,(self.dino_rect.x,self.dino_rect.y))
-
     def run(self):
         self.image = self.run_img[self.step_index//5]
         self.dino_rect = self.image.get_rect()
@@ -76,9 +75,15 @@ class Dinosaur():
         self.dino_rect.y = self.y_pos
         self.step_index +=1
 
-    def  jump(self):
-        pass
-
+    def jump(self):
+        self.image = self.jump_img
+        if self.dino_jump:
+            self.dino_rect.y -= self.jump_vel * 4
+            self.jump_vel -= 0.8
+        if self.jump_vel < - self.JUMP_VEL:
+            self.dino_jump = False
+            self.jump_vel = self.JUMP_VEL
+            
     def duck(self):
         self.image = self.duck_img[self.step_index//5]
         self.dino_rect = self.image.get_rect()
@@ -86,6 +91,9 @@ class Dinosaur():
         self.dino_rect.y = self.y_pos_duck
         self.step_index +=1
 
+    def draw(self,screen):
+        screen.blit(self.image,(self.dino_rect.x,self.dino_rect.y))
+        
 def main():
     run = True
     clock = pygame.time.Clock()
