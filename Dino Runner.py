@@ -16,7 +16,7 @@ ducking = [pygame.image.load("DinoDuck1.png"),pygame.image.load("DinoDuck2.png")
 small_cactus = [pygame.image.load("SmallCactus1.png"),pygame.image.load("SmallCactus2.png"),pygame.image.load("SmallCactus3.png")]
 large_cactus = [pygame.image.load("LargeCactus1.png"),pygame.image.load("LargeCactus2.png"),pygame.image.load("LargeCactus3.png")]
 bird = [pygame.image.load("Bird1.png"),pygame.image.load("Bird2.png")]
-cloud = pygame.image.load("Cloud.png")
+cloudy = pygame.image.load("Cloud.png")
 BG = pygame.image.load("Track.png")
 
 
@@ -100,7 +100,7 @@ class cloud:
     def __init__(self):
         self.x = Width + random.randint(800,1000)
         self.y = random.randint(50,100)
-        self.image = cloud
+        self.image = cloudy
         self.width = self.image.get_width()
 
     def update(self):
