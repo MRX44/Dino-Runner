@@ -1,4 +1,5 @@
 import pygame
+import random
 
 pygame.init()
 
@@ -93,11 +94,33 @@ class Dinosaur():
 
     def draw(self,screen):
         screen.blit(self.image,(self.dino_rect.x,self.dino_rect.y))
+
+
+class cloud:
+    def __init__(self):
+        self.x = Width + random.randint(800,1000)
+        self.y = random.randint(50,100)
+        self.image = cloud
+        self.width = self.image.get_width()
+
+    def update(self):
+        self.x -= game_speed
+        if self.x <  -self.width :
+            self.x = Width + random.randint(1800,2500)
+            self.y = random.randint(50,100)
         
+
+    def draw(self,screen):
+         screen.blit(self.image,(self.x, self.y))
+
+    
 def main():
     run = True
+    global game_speed
+    game_speed=15
     clock = pygame.time.Clock()
     player = Dinosaur()
+    Cloud = cloud()
 
     while run:
         for event in pygame.event.get():
@@ -112,6 +135,9 @@ def main():
         player.draw(screen)
         player.update(userinput)
 
+        Cloud.draw(screen)
+        Cloud.update()
+        
 
         clock.tick(30)
         pygame.display.update()
